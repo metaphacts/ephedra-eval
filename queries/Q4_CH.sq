@@ -1,0 +1,19 @@
+# Give me other people similar to the group of painters who collaborated with Rembrandt
+PREFIX rs: <http://www.researchspace.org/ontology/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX mpfed: <http://www.metaphacts.com/ontologies/platform/repository/federation#>
+SELECT (mpfed:word2vec(?collabWikidataIRI) as ?similar) WHERE {
+    SERVICE mpfed:wikidata-text  {
+                  ?wikidataIRI <http://www.metaphacts.com/ontology/hasWikidataSearchToken> "rembrandt" .
+        }
+    SERVICE <https://public.researchspace.org/sparql> {
+      ?bmIRI skos:exactMatch ?wikidataIRI .
+      ?bmIRI rs:Actor_is_creator_of_Thing ?artifact .
+      ?collabBMIRI rs:Actor_is_creator_of_Thing ?artifact .
+      ?collabBMIRI skos:exactMatch ?collabWikidataIRI .
+      FILTER (?bmIRI != ?collabBMIRI)
+    }
+    ?collabWikidataIRI wdt:P106 wd:Q1028181 .
+  }

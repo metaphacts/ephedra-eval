@@ -1,0 +1,12 @@
+# Give me the gene which encodes tuberin and is related to obesity
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+SELECT * WHERE {
+  SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#wikidata-text> {
+    ?disease <http://www.metaphacts.com/ontology/hasWikidataSearchToken> "obesity" .
+  }
+  SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#wikidata-text> {
+    ?uri <http://www.metaphacts.com/ontology/hasWikidataSearchToken> "tuberin" .
+  }
+  ?uri wdt:P702 ?gene .
+  ?gene wdt:P2293 ?disease .
+}

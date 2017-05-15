@@ -1,0 +1,15 @@
+# Give me the artists born in Florence who created the images of Mary
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+SELECT * WHERE {
+ SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#wikidata-text> {
+    ?home <http://www.metaphacts.com/ontology/hasWikidataSearchToken> "florence" .
+ }
+
+ SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#wikidata-text> {
+    ?character <http://www.metaphacts.com/ontology/hasWikidataSearchToken> "Mary" .
+  }
+
+  ?object wdt:P180 ?character .
+  ?object wdt:P170 ?creator .
+  ?creator wdt:P19 ?home .
+}

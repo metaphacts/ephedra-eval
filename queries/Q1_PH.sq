@@ -1,0 +1,15 @@
+# Give me the gene which encodes reelin, diseases associated with it, and similar sequences.
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX blast: <http://www.metaphacts.com/ontology/BLAST/>
+SELECT * WHERE {
+  SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#wikidata-text> {
+            ?uri <http://www.metaphacts.com/ontology/hasWikidataSearchToken> "reelin" .
+        }
+        ?uri wdt:P702 ?gene .
+        ?gene wdt:P639 ?refseqID .
+        ?gene wdt:P2293 ?disease .
+        SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#BLAST> {
+            ?refseqID blast:hasSimilarSequence ?y .
+  }
+}

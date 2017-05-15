@@ -1,0 +1,16 @@
+# Give me the depictions of French Kings held by the British Museum and their authors
+PREFIX rs: <http://www.researchspace.org/ontology/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX mpfed: <http://www.metaphacts.com/ontologies/platform/repository/federation#>
+SELECT * WHERE {
+    ?character wdt:P39 wd:Q3439798 .
+    SERVICE <https://public.researchspace.org/sparql> {
+      ?bmIRI skos:exactMatch ?character .
+      ?bmIRI rs:Actor_is_referred_to_by_Thing ?artifact .
+      ?artistBMIRI rs:Actor_is_creator_of_Thing ?artifact .
+      ?artistBMIRI skos:exactMatch ?artistWikidataIRI .
+    }
+    ?artistWikidataIRI rdfs:label ?label .
+  }

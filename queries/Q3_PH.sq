@@ -1,0 +1,15 @@
+# Give me the genes associated with the Alzheimer's disease, corresponding proteins, and their Uniprot and Nextprot IDs.
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT * WHERE {
+  SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#wikidata-text> {
+    ?disease <http://www.metaphacts.com/ontology/hasWikidataSearchToken> "alzheimer" .
+  }
+  ?uri wdt:P702 ?gene .
+  ?gene wdt:P2293 ?disease .
+  ?uri wdt:P352 ?uniprotid.
+  BIND(URI(CONCAT("http://purl.uniprot.org/uniprot/", ?uniprotid)) AS ?uniprot)
+  SERVICE <https://nextprot.metaphacts.net/bigdata/sparql> {
+    ?nextprot skos:exactMatch ?uniprot.
+  }
+}
